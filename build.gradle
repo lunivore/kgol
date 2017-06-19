@@ -1,0 +1,81 @@
+group 'com.lunivore'
+version '0.0.1-SNAPSHOT'
+
+buildscript {
+    ext.kotlinVersion = '1.1.2'
+    ext.reactFxVersion = '1.4.1'
+    ext.junitVersion  = '4.12'
+    ext.mockitoVersion = '1.10.19'
+    ext.stirryVersion = '0.0.2-20170609'
+    ext.cucumberVersion = '1.2.5'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+sourceSets {
+    scenarios {
+        kotlin {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/scenarios/kotlin')
+            resources.srcDirs = ["src/scenarios/resources"]
+        }
+    }
+}
+
+//// Using Stirry from Github for scenarios
+//
+// I would love to use an Ivy patterned repository instead. Unfortunately Ivy calls HEAD,
+// which causes Github to return a 403 error "Forbidden". Copying it to a local lib directory
+// is the next best thing. Maybe one day Stirry will be releasable too.
+////
+clean {
+    delete("libs")
+}
+task("copyStirry") {
+    if(!file("libs").exists()) { file("libs").mkdir() }
+    if(!file("libs/stirry-${stirryVersion}.jar").exists()) {
+        ant.get(src: "http://github.com/lunivore/Stirry/releases/download/$stirryVersion/stirry-${stirryVersion}.jar",
+                dest: "libs",
+                skipexisting: true)
+    }
+}
+scenariosClasses.dependsOn("copyStirry")
+// End using Stirry from Github
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    compile "org.reactfx:reactfx:$reactFxVersion"
+
+    testCompile "junit:junit:$junitVersion"
+    testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testRuntime "junit:junit:$junitVersion"
+
+    scenariosCompile "junit:junit:$junitVersion"
+    scenariosCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+    scenariosCompile "org.reactfx:reactfx:$reactFxVersion"
+    scenariosCompile "com.lunivore.stirry:stirry:$stirryVersion"
+    scenariosCompile "info.cukes:cucumber-junit:$cucumberVersion"
+    scenariosCompile "info.cukes:cucumber-java8:$cucumberVersion"
+    scenariosCompile "info.cukes:cucumber-picocontainer:$cucumberVersion"
+
+    scenariosRuntime "junit:junit:$junitVersion"
+    scenariosRuntime "com.lunivore.stirry:stirry:$stirryVersion"
+}

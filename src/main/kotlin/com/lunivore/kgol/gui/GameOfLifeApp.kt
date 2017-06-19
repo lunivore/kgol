@@ -1,0 +1,71 @@
+package com.lunivore.kgol.gui
+
+import com.lunivore.kgol.Events
+import com.lunivore.kgol.GameOfLife.Companion.SCALE
+import com.lunivore.kgol.model.Cell
+import javafx.application.Application
+import javafx.event.ActionEvent
+import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
+import javafx.scene.Scene
+import javafx.scene.canvas.Canvas
+import javafx.scene.input.MouseEvent
+import javafx.scene.paint.Color
+import javafx.stage.Stage
+import org.reactfx.EventStreams
+
+
+class GameOfLifeApp(val events : Events) : Application() {
+
+
+    override fun start(stage: Stage) {
+        val fxml = javaClass.getResource("/game_of_life.fxml")
+        val root = FXMLLoader.load<Parent>(fxml)
+
+        val scene = Scene(root)
+        stage.setTitle("Conway's Game of Life")
+        stage.setScene(scene)
+        stage.show()
+
+        val gameCanvas : Canvas = root.lookup("#gameCanvas") as Canvas
+        drawBackground(gameCanvas)
+
+        EventStreams.eventsOf(gameCanvas, MouseEvent.MOUSE_CLICKED)
+                .subscribe {
+                    events.toggleRequestEvents.push(Cell((it.x / SCALE).toInt(), (it.y / SCALE).toInt()))
+                }
+
+        val nextButton = root.lookup("#nextGenerationButton")
+        EventStreams.eventsOf(nextButton, ActionEvent.ACTION).subscribe { events.generationRequestEvents.push(null) }
+
+        val clearButton = root.lookup("#clearButton")
+        EventStreams.eventsOf(clearButton, ActionEvent.ACTION).subscribe { events.clearRequestEvents.push(null) }
+
+        events.generationEvents.subscribe {
+            with(gameCanvas.getGraphicsContext2D()) {
+                drawBackground(canvas)
+                fill = Color.BLACK
+                it.cells.forEach{
+                    fillRect(it.col * SCALE, it.row * SCALE, SCALE, SCALE)
+                }
+            }
+        }
+    }
+
+    private fun drawBackground(gameCanvas: Canvas) {
+        with(gameCanvas.graphicsContext2D) {
+            fill = Color.WHITE
+            fillRect(0.0, 0.0, gameCanvas.width, gameCanvas.height)
+
+            stroke = Color.LIGHTGRAY
+            for (col in 0 until (gameCanvas.width / SCALE).toInt()) {
+                strokeLine(col * SCALE, 0.0, col* SCALE, gameCanvas.height)
+            }
+            for (row in 0 until (gameCanvas.height / SCALE).toInt()) {
+                strokeLine(0.0, row * SCALE, gameCanvas.width, row* SCALE)
+            }
+        }
+    }
+
+}
+

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<GridPane xmlns="http://javafx.com/javafx"
+          styleClass="root">
+
+    <stylesheets>
+        <URL value="@game_of_life.css" />
+    </stylesheets>
+
+    <Canvas id="gameCanvas"
+            GridPane.columnIndex="0" GridPane.rowIndex="0" GridPane.columnSpan="2"
+            height="400" width="600"
+    />
+
+    <Button id="nextGenerationButton"
+            GridPane.columnIndex="0" GridPane.rowIndex="1">Next Generation</Button>
+
+    <Button id="clearButton"
+            GridPane.columnIndex="1" GridPane.rowIndex="1">Clear</Button>
+
+</GridPane>
