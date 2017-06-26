@@ -20,7 +20,6 @@ class GridSteps : En {
         })
 
         When("^we step to the next generation$", {
-            stopKotlinOptimizationThatMessesUpCucumber()
             Stirry.buttonClick { it.id == "nextGenerationButton" }
         })
 
@@ -34,10 +33,6 @@ class GridSteps : En {
                 assertEquals(expectedGrid, grid)
             }
         });
-    }
-
-    private fun stopKotlinOptimizationThatMessesUpCucumber() {
-        this
     }
 
 }
