@@ -7,7 +7,7 @@ buildscript {
     ext.junitVersion  = '4.12'
     ext.mockitoVersion = '1.10.19'
     ext.stirryVersion = '0.0.2-20170609'
-    ext.cucumberVersion = '1.2.5'
+    ext.cucumberVersion = '2.0.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
@@ -24,6 +24,9 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots"
+    }
     flatDir {
         dirs 'libs'
     }
@@ -72,9 +75,9 @@ dependencies {
     scenariosCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     scenariosCompile "org.reactfx:reactfx:$reactFxVersion"
     scenariosCompile "com.lunivore.stirry:stirry:$stirryVersion"
-    scenariosCompile "info.cukes:cucumber-junit:$cucumberVersion"
-    scenariosCompile "info.cukes:cucumber-java8:$cucumberVersion"
-    scenariosCompile "info.cukes:cucumber-picocontainer:$cucumberVersion"
+    scenariosCompile "io.cucumber:cucumber-junit:$cucumberVersion"
+    scenariosCompile "io.cucumber:cucumber-java8:$cucumberVersion"
+    scenariosCompile "io.cucumber:cucumber-picocontainer:$cucumberVersion"
 
     scenariosRuntime "junit:junit:$junitVersion"
     scenariosRuntime "com.lunivore.stirry:stirry:$stirryVersion"
