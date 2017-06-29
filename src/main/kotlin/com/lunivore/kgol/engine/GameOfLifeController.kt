@@ -3,6 +3,8 @@ package com.lunivore.kgol.engine
 import com.lunivore.kgol.Events
 import com.lunivore.kgol.model.Cells
 
+import java.lang.UnsupportedOperationException
+
 /**
  * This is the main engine class for the Game of Life. It controls the interactions between the GUI and the other
  * classes in the engine (if they're needed).
@@ -14,6 +16,4 @@ class GameOfLifeController(val events : Events) {
                     "Use .push on events to tell the GUI if something changed.")
         }
     }
-
-
 }
