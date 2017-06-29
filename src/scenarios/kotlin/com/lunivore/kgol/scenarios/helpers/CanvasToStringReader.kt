@@ -1,4 +1,4 @@
-package helpers
+package com.lunivore.kgol.scenarios.helpers
 
 import com.lunivore.kgol.GameOfLife
 import javafx.application.Platform

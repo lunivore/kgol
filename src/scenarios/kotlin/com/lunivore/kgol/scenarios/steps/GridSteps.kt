@@ -3,7 +3,7 @@ package com.lunivore.kgol.scenarios.steps
 import com.lunivore.kgol.scenarios.helpers.StringToCanvasPainter
 import com.lunivore.stirry.Stirry
 import cucumber.api.java8.En
-import helpers.CanvasToStringReader
+import com.lunivore.kgol.scenarios.helpers.CanvasToStringReader
 import javafx.scene.canvas.Canvas
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
@@ -21,9 +21,8 @@ class GridSteps : En {
             }
         })
 
-        When("^we step to the next generation$", {
-            stopKotlinOptimizationThatMessesUpCucumber()
-            Stirry.buttonClick { it.id == "nextGenerationButton" }
+        Given("^the game is running$", {
+            // Requires nothing as this is already done for every scenario
         })
 
         Then("^the grid should look like$", { expectedGridFragment : String ->
