@@ -1,6 +1,7 @@
 package com.lunivore.kgol.engine
 
 import com.lunivore.kgol.Events
+import com.lunivore.kgol.model.Cell
 import com.lunivore.kgol.model.Cells
 
 import java.lang.UnsupportedOperationException
@@ -10,10 +11,14 @@ import java.lang.UnsupportedOperationException
  * classes in the engine (if they're needed).
  */
 class GameOfLifeController(val events : Events) {
+    val liveCells = mutableSetOf<Cell>()
     init {
+
         events.toggleRequestEvents.subscribe {
-            throw UnsupportedOperationException("Implement me and connect the other events too! " +
-                    "Use .push on events to tell the GUI if something changed.")
+            if (!liveCells.add(it)) {
+                liveCells.remove(it)
+            }
+            events.cellChangeNotificationEvents.push(Cells(liveCells))
         }
     }
 }
