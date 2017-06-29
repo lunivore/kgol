@@ -7,7 +7,9 @@ buildscript {
     ext.junitVersion  = '4.12'
     ext.mockitoVersion = '1.10.19'
     ext.stirryVersion = '0.0.2-20170609'
-    ext.cucumberVersion = '2.0.0-SNAPSHOT'
+    ext.cucumberJava8Version = '2.0.0-20170625.232453-39'
+    ext.cucumberPicocontainerVersion = '2.0.0-20170625.231840-37'
+    ext.cucumberJUnitVersion = '2.0.0-20170625.231811-37'
 
     repositories {
         mavenCentral()
@@ -75,9 +77,9 @@ dependencies {
     scenariosCompile "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
     scenariosCompile "org.reactfx:reactfx:$reactFxVersion"
     scenariosCompile "com.lunivore.stirry:stirry:$stirryVersion"
-    scenariosCompile "io.cucumber:cucumber-junit:$cucumberVersion"
-    scenariosCompile "io.cucumber:cucumber-java8:$cucumberVersion"
-    scenariosCompile "io.cucumber:cucumber-picocontainer:$cucumberVersion"
+    scenariosCompile "io.cucumber:cucumber-junit:$cucumberJUnitVersion"
+    scenariosCompile "io.cucumber:cucumber-java8:$cucumberJava8Version"
+    scenariosCompile "io.cucumber:cucumber-picocontainer:$cucumberPicocontainerVersion"
 
     scenariosRuntime "junit:junit:$junitVersion"
     scenariosRuntime "com.lunivore.stirry:stirry:$stirryVersion"
