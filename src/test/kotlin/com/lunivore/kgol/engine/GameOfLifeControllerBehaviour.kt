@@ -19,7 +19,7 @@ class GameOfLifeControllerBehaviour : Behaviour() {
         var events = Events()
         var game = GameOfLifeController(events)
 
-        events.generationEvents.subscribe { cells = it }
+        events.cellChangeNotificationEvents.subscribe { cells = it }
 
         // When we toggle some cells on and off
         events.toggleRequestEvents.push(Cell(1, 1))
@@ -45,10 +45,10 @@ class GameOfLifeControllerBehaviour : Behaviour() {
 
         // ...that we're listening to
         var cells = Cells(setOf())
-        events.generationEvents.subscribe { cells = it }
+        events.cellChangeNotificationEvents.subscribe { cells = it }
 
         // When we step to the next generation
-        events.generationRequestEvents.push(null)
+        events.nextGenerationRequestEvents.push(null)
 
         // Then the rules should have been applied
         assertEquals(Cells(expectedCells), cells)

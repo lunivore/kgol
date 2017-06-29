@@ -7,7 +7,7 @@ import org.junit.runner.RunWith
 @RunWith(Cucumber::class)
 @CucumberOptions(
         format = arrayOf("pretty"),
-        glue = arrayOf("com.lunivore.kgol.scenarios.glue"),
+        glue = arrayOf("com.lunivore.kgol.scenarios.steps"),
         features = arrayOf("."))
 class Runner {
 }

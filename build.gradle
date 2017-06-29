@@ -82,3 +82,16 @@ dependencies {
     scenariosRuntime "junit:junit:$junitVersion"
     scenariosRuntime "com.lunivore.stirry:stirry:$stirryVersion"
 }
+
+task testScenarios(type: Test) {
+    testClassesDir = sourceSets.scenarios.output.classesDir
+    classpath = sourceSets.scenarios.runtimeClasspath
+    outputs.upToDateWhen { false }
+}
+
+tasks.withType(Test) {
+    reports.html.destination = file("${reporting.baseDir}/${name}")
+}
+
+check.dependsOn testScenarios
+testScenarios.mustRunAfter test
