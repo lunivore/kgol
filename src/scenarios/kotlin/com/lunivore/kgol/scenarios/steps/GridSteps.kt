@@ -1,7 +1,9 @@
-package com.lunivore.kgol.scenarios.glue
+package com.lunivore.kgol.scenarios.steps
 
+import com.lunivore.kgol.scenarios.helpers.StringToCanvasPainter
 import com.lunivore.stirry.Stirry
 import cucumber.api.java8.En
+import helpers.CanvasToStringReader
 import javafx.scene.canvas.Canvas
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
@@ -15,7 +17,7 @@ class GridSteps : En {
             if (canvas == null) {
                 fail("Could not find Canvas")
             } else {
-                Painter().paintGrid(grid, canvas)
+                StringToCanvasPainter().paintGrid(grid, canvas)
             }
         })
 
@@ -29,8 +31,8 @@ class GridSteps : En {
             if (canvas == null) {
                 fail("Could not find Canvas")
             } else {
-                val grid = Reporter().gridFrom(canvas)
-                val expectedGrid = Reporter().expandFragmentTo(canvas, expectedGridFragment)
+                val grid = CanvasToStringReader().gridFrom(canvas)
+                val expectedGrid = CanvasToStringReader().expandFragmentTo(canvas, expectedGridFragment)
                 assertEquals(expectedGrid, grid)
             }
         });

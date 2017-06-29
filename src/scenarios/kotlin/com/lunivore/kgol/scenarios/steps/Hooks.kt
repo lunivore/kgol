@@ -1,4 +1,4 @@
-package com.lunivore.kgol.scenarios.glue
+package com.lunivore.kgol.scenarios.steps
 
 import com.lunivore.kgol.GameOfLife
 import com.lunivore.stirry.Stirry

@@ -3,6 +3,7 @@ package com.lunivore.kgol.gui
 import com.lunivore.kgol.Events
 import com.lunivore.kgol.GameOfLife.Companion.SCALE
 import com.lunivore.kgol.model.Cell
+import com.lunivore.kgol.model.Cells
 import javafx.application.Application
 import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
@@ -28,7 +29,7 @@ class GameOfLifeApp(val events : Events) : Application() {
         stage.show()
 
         val gameCanvas : Canvas = root.lookup("#gameCanvas") as Canvas
-        drawBackground(gameCanvas)
+        drawBackgroundAndGridlines(gameCanvas)
 
         EventStreams.eventsOf(gameCanvas, MouseEvent.MOUSE_CLICKED)
                 .subscribe {
@@ -36,23 +37,27 @@ class GameOfLifeApp(val events : Events) : Application() {
                 }
 
         val nextButton = root.lookup("#nextGenerationButton")
-        EventStreams.eventsOf(nextButton, ActionEvent.ACTION).subscribe { events.generationRequestEvents.push(null) }
+        EventStreams.eventsOf(nextButton, ActionEvent.ACTION).subscribe { events.nextGenerationRequestEvents.push(null) }
 
         val clearButton = root.lookup("#clearButton")
         EventStreams.eventsOf(clearButton, ActionEvent.ACTION).subscribe { events.clearRequestEvents.push(null) }
 
-        events.generationEvents.subscribe {
-            with(gameCanvas.getGraphicsContext2D()) {
-                drawBackground(canvas)
-                fill = Color.BLACK
-                it.cells.forEach{
-                    fillRect(it.col * SCALE, it.row * SCALE, SCALE, SCALE)
-                }
+        events.cellChangeNotificationEvents.subscribe {
+            clearAndFillLivingCells(gameCanvas, it)
+        }
+    }
+
+    private fun GameOfLifeApp.clearAndFillLivingCells(gameCanvas: Canvas, cells: Cells) {
+        with(gameCanvas.getGraphicsContext2D()) {
+            drawBackgroundAndGridlines(canvas)
+            fill = Color.BLACK
+            cells.cells.forEach {
+                fillRect(it.col * SCALE, it.row * SCALE, SCALE, SCALE)
             }
         }
     }
 
-    private fun drawBackground(gameCanvas: Canvas) {
+    private fun drawBackgroundAndGridlines(gameCanvas: Canvas) {
         with(gameCanvas.graphicsContext2D) {
             fill = Color.WHITE
             fillRect(0.0, 0.0, gameCanvas.width, gameCanvas.height)

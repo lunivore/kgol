@@ -1,4 +1,4 @@
-package com.lunivore.kgol.scenarios.glue
+package com.lunivore.kgol.scenarios.helpers
 
 import com.lunivore.kgol.GameOfLife
 import javafx.event.Event
@@ -6,10 +6,14 @@ import javafx.scene.canvas.Canvas
 import javafx.scene.input.MouseButton
 import javafx.scene.input.MouseEvent
 
-class Painter {
+class StringToCanvasPainter {
     private data class Cell(val col : Int, val row : Int)
     private val NO_CELL = Cell(-1, -1)
 
+    /**
+     * Takes a string representation of a grid and fires mouse events to replicate someone
+     * setting up that grid on a canvas in the Game of Life.
+     */
     fun  paintGrid(grid: String, canvas: Canvas) {
 
         val cells = grid.trimIndent().lines()

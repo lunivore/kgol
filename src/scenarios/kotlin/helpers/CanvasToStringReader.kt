@@ -1,4 +1,4 @@
-package com.lunivore.kgol.scenarios.glue
+package helpers
 
 import com.lunivore.kgol.GameOfLife
 import javafx.application.Platform
@@ -9,7 +9,11 @@ import javafx.scene.paint.Color
 import java.util.concurrent.ArrayBlockingQueue
 import java.util.concurrent.TimeUnit
 
-class Reporter {
+class CanvasToStringReader {
+    /**
+     * Takes a JavaFX canvas, reads the central pixel of each square at the game's SCALE,
+     * then generates a string representation of that. Currently only works in black (#) and white (.).
+     */
     fun gridFrom(canvas: Canvas): String {
         val image = WritableImage(canvas.width.toInt(), canvas.height.toInt())
 
@@ -35,6 +39,10 @@ class Reporter {
 
     private fun toPixelCoord(col: Int) = ((col * GameOfLife.SCALE) + (GameOfLife.SCALE / 2)).toInt()
 
+    /**
+     * Takes a fragment of a grid expressed as a string, and expands it to match the width and height
+     * of cells in a canvas, assuming that the fragment is at the top left and that all other cells are empty.
+     */
     fun  expandFragmentTo(canvas: Canvas, expectedGridFragment: String): String {
         var fragmentLines = expectedGridFragment.trimIndent().lines()
         var grid = ""
