@@ -15,7 +15,7 @@ class GameOfLifeControllerBehaviour : Behaviour() {
     @Test
     fun shouldToggleCells() {
         // Given we're listening to cell creation events
-        var cells = Cells(setOf())
+        var cells = Cells.EMPTY
         var events = Events()
         var game = GameOfLifeController(events)
 
@@ -44,7 +44,7 @@ class GameOfLifeControllerBehaviour : Behaviour() {
         events.toggleRequestEvents.push(Cell(2, 8))
 
         // ...that we're listening to
-        var cells = Cells(setOf())
+        var cells = Cells.EMPTY
         events.cellChangeNotificationEvents.subscribe { cells = it }
 
         // When we step to the next generation

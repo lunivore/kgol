@@ -14,5 +14,9 @@ data class Cell(val col: Int, val row: Int) {
     }
 }
 
-data class Cells(val cells: Set<Cell>)
+data class Cells(val cells: Set<Cell>) {
+    companion object {
+        val EMPTY = Cells(setOf())
+    }
+}
 
