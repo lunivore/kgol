@@ -19,4 +19,17 @@ class BasicRulesTest {
         //then the cell should die
         assertEquals(Cells(setOf()), newCells)
     }
+
+    @Test
+    fun `should Keep cells alive if they have 2 or 3 neighbours`() {
+
+    }
+
+    @Test
+    fun `should kill cells with more 3 neighbours`() {}
+
+    @Test
+    fun `should create cells if they have 3 neighbours in an empty space`() {
+
+    }
 }

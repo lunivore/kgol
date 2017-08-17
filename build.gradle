@@ -7,9 +7,9 @@ buildscript {
     ext.junitVersion  = '4.12'
     ext.mockitoVersion = '1.10.19'
     ext.stirryVersion = '0.0.2-20170609'
-    ext.cucumberJava8Version = '2.0.0-20170625.232453-39'
-    ext.cucumberPicocontainerVersion = '2.0.0-20170625.231840-37'
-    ext.cucumberJUnitVersion = '2.0.0-20170625.231811-37'
+    ext.cucumberJava8Version = '2.0.0-SNAPSHOT'
+    ext.cucumberPicocontainerVersion = '2.0.0-SNAPSHOT'
+    ext.cucumberJUnitVersion = '2.0.0-SNAPSHOT'
 
     repositories {
         mavenCentral()
@@ -45,6 +45,14 @@ sourceSets {
     }
 }
 
+task("copyStirry") {
+    if(!file("libs").exists()) { file("libs").mkdir() }
+    if(!file("libs/stirry-${stirryVersion}.jar").exists()) {
+        ant.get(src: "http://github.com/lunivore/Stirry/releases/download/$stirryVersion/stirry-${stirryVersion}.jar",
+                dest: "libs",
+                skipexisting: true)
+    }
+}
 //// Using Stirry from Github for scenarios
 //
 // I would love to use an Ivy patterned repository instead. Unfortunately Ivy calls HEAD,
@@ -53,14 +61,7 @@ sourceSets {
 ////
 clean {
     delete("libs")
-}
-task("copyStirry") {
-    if(!file("libs").exists()) { file("libs").mkdir() }
-    if(!file("libs/stirry-${stirryVersion}.jar").exists()) {
-        ant.get(src: "http://github.com/lunivore/Stirry/releases/download/$stirryVersion/stirry-${stirryVersion}.jar",
-                dest: "libs",
-                skipexisting: true)
-    }
+    copyStirry
 }
 scenariosClasses.dependsOn("copyStirry")
 // End using Stirry from Github
