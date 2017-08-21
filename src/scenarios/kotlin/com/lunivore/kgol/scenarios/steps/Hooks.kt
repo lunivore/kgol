@@ -15,7 +15,7 @@ class Hooks constructor() : En {
         System.out.println("Initializing Stirry...")
         Stirry.initialize()
         gameOfLife = GameOfLife()
-        Stirry.startApp(gameOfLife)
+        Stirry.launchApp(gameOfLife)
     }
 
     @After
