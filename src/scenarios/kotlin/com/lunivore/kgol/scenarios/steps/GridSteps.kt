@@ -4,21 +4,18 @@ import com.lunivore.kgol.scenarios.helpers.StringToCanvasPainter
 import com.lunivore.stirry.Stirry
 import cucumber.api.java8.En
 import com.lunivore.kgol.scenarios.helpers.CanvasToStringReader
+import com.lunivore.kgol.scenarios.helpers.KGolScenario
 import javafx.scene.canvas.Canvas
 import org.junit.Assert.assertEquals
 import org.junit.Assert.fail
 
-class GridSteps : En {
+class GridSteps : KGolScenario() {
 
     init {
 
         Given("^a grid which looks like$", {grid : String ->
-            var canvas = Stirry.find<Canvas> { it.id == "gameCanvas" }
-            if (canvas == null) {
-                fail("Could not find Canvas")
-            } else {
-                StringToCanvasPainter().paintGrid(grid, canvas)
-            }
+            withCanvas( {StringToCanvasPainter().paintGrid(grid, it) })
+
         })
 
         Given("^the game is running$", {
@@ -26,12 +23,9 @@ class GridSteps : En {
         })
 
         Then("^the grid should look like$", { expectedGridFragment : String ->
-            var canvas = Stirry.find<Canvas> { it.id == "gameCanvas" }
-            if (canvas == null) {
-                fail("Could not find Canvas")
-            } else {
-                val grid = CanvasToStringReader().gridFrom(canvas)
-                val expectedGrid = CanvasToStringReader().expandFragmentTo(canvas, expectedGridFragment)
+            withCanvas {
+                val grid = CanvasToStringReader().gridFrom(it)
+                val expectedGrid = CanvasToStringReader().expandFragmentTo(it, expectedGridFragment)
                 assertEquals(expectedGrid, grid)
             }
         });
