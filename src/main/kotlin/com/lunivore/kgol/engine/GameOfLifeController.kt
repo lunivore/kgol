@@ -2,7 +2,7 @@ package com.lunivore.kgol.engine
 
 import com.lunivore.kgol.Events
 import com.lunivore.kgol.model.Cell
-import com.lunivore.kgol.model.Cells
+import com.lunivore.kgol.model.Population
 
 /**
  * This is the main engine class for the Game of Life. It controls the interactions between the GUI and the other
@@ -18,11 +18,11 @@ class GameOfLifeController {
             if (!liveCells.add(it)) {
                 liveCells.remove(it)
             }
-            events.cellChangeNotificationEvents.push(Cells(liveCells))
+            events.cellChangeNotificationEvents.push(Population(liveCells))
         }
         events.nextGenerationRequestEvents.subscribe {
-            this.liveCells = rules.apply(Cells(liveCells)).cells.toMutableSet()
-            events.cellChangeNotificationEvents.push(Cells(liveCells))
+            this.liveCells = rules.apply(Population(liveCells)).cells.toMutableSet()
+            events.cellChangeNotificationEvents.push(Population(liveCells))
         }
     }
 

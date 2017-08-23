@@ -3,7 +3,7 @@ package com.lunivore.kgol.gui
 import com.lunivore.kgol.Events
 import com.lunivore.kgol.GameOfLife.Companion.SCALE
 import com.lunivore.kgol.model.Cell
-import com.lunivore.kgol.model.Cells
+import com.lunivore.kgol.model.Population
 import javafx.application.Application
 import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
@@ -47,11 +47,11 @@ class GameOfLifeApp(val events : Events) : Application() {
         }
     }
 
-    private fun GameOfLifeApp.clearAndFillLivingCells(gameCanvas: Canvas, cells: Cells) {
+    private fun GameOfLifeApp.clearAndFillLivingCells(gameCanvas: Canvas, population: Population) {
         with(gameCanvas.getGraphicsContext2D()) {
             drawBackgroundAndGridlines(canvas)
             fill = Color.BLACK
-            cells.cells.forEach {
+            population.cells.forEach {
                 fillRect(it.col * SCALE, it.row * SCALE, SCALE, SCALE)
             }
         }

@@ -1,7 +1,7 @@
 package com.lunivore.kgol.engine
 
-import com.lunivore.kgol.model.Cells
+import com.lunivore.kgol.model.Population
 
 interface Rules {
-    fun apply(block: Cells): Cells
+    fun apply(block: Population): Population
 }

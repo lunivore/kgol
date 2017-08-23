@@ -1,7 +1,7 @@
 package com.lunivore.kgol
 
 import com.lunivore.kgol.model.Cell
-import com.lunivore.kgol.model.Cells
+import com.lunivore.kgol.model.Population
 import org.reactfx.EventSource
 
 class Events {
@@ -24,5 +24,5 @@ class Events {
     /**
      * Notifications from the engine to the GUI that the cells in the grid have changed
      */
-    val cellChangeNotificationEvents = EventSource<Cells>()
+    val cellChangeNotificationEvents = EventSource<Population>()
 }
