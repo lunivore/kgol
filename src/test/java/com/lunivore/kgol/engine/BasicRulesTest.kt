@@ -18,7 +18,7 @@ class BasicRulesTest {
         val newCells = rules.apply(cells)
 
         //then the cell should die
-        assertEquals(Population(setOf()), newCells)
+        assertEquals(Population.EMPTY, newCells)
     }
 
     @Test
@@ -44,6 +44,19 @@ class BasicRulesTest {
         val newCells = rules.apply(cells)
 
         //then the cell in the middle should live
+        assertTrue("Should contain cell 3,3 but doesn't!", newCells.cells.contains(Cell(3, 3)))
+    }
+
+    @Test
+    fun `should create a live cell if it has 3 neighbours` () {
+        //given I am a cell with 3 neighbours
+        val rules = BasicRules()
+        val cells = Population(setOf(Cell(2, 2), Cell(4, 4), Cell(3, 4)))
+
+        //when I apply the rules
+        val newCells = rules.apply(cells)
+
+        //then the cell in the middle should come to life!!!
         assertTrue("Should contain cell 3,3 but doesn't!", newCells.cells.contains(Cell(3, 3)))
     }
 }

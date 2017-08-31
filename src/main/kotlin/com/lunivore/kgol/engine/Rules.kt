@@ -3,5 +3,5 @@ package com.lunivore.kgol.engine
 import com.lunivore.kgol.model.Population
 
 interface Rules {
-    fun apply(block: Population): Population
+    fun apply(population: Population): Population
 }
