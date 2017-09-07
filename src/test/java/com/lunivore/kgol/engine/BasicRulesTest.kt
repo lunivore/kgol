@@ -58,5 +58,6 @@ class BasicRulesTest {
 
         //then the cell in the middle should come to life!!!
         assertTrue("Should contain cell 3,3 but doesn't!", newCells.cells.contains(Cell(3, 3)))
+        assertTrue("Should not be born!", !newCells.cells.contains(Cell(4, 3)))
     }
 }

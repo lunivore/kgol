@@ -15,4 +15,12 @@ data class Population(val cells: Set<Cell>) {
 
 
     }
+
+    fun lifeCandidates(): Set<Cell> {
+        return cells.flatMap{it.withAdjacentCells()}.toSet()
+    }
+
+    fun  contains(cell: Cell): Boolean {
+        return cells.contains(cell)
+    }
 }
